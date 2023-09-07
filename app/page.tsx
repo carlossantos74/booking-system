@@ -1,10 +1,13 @@
-/* Components */
-import { Counter } from './components/Counter/Counter'
+import { Typography } from "@mui/material"
 
-export default function IndexPage() {
-  return <Counter />
+export default function Page() {
+  return (
+    <main>
+      <Typography variant="h1">Booking system</Typography>
+    </main>
+  )
 }
 
 export const metadata = {
-  title: 'Redux Toolkit',
+  title: 'Booking system',
 }
