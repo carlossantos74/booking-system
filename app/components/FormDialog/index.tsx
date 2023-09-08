@@ -1,6 +1,13 @@
 'use client'
 
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from "@mui/material"
+import { 
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material"
 
 type FormDialogProps = {
   open: boolean
@@ -23,8 +30,10 @@ export function FormDialog ({
   }: FormDialogProps) {
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle>{title}</DialogTitle>
-      <DialogContent>
+      <DialogTitle variant="h4">
+        {title}
+      </DialogTitle>
+      <DialogContent sx={{ minWidth: 400 }}>
         {
           description && (
             <DialogContentText>
@@ -35,8 +44,8 @@ export function FormDialog ({
         { form }
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>Cancel</Button>
-        <Button onClick={onConfirm}>{buttonText}</Button>
+        <Button variant="contained" onClick={onClose}>Cancel</Button>
+        <Button variant="contained" onClick={onConfirm}>{buttonText}</Button>
       </DialogActions>
     </Dialog>
   )
