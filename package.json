@@ -13,6 +13,7 @@
     "@mui/material": "^5.14.8",
     "@prisma/client": "^5.2.0",
     "@reduxjs/toolkit": "1.9.5",
+    "moment": "^2.29.4",
     "next": "latest",
     "react": "18.2.0",
     "react-dom": "18.2.0",
