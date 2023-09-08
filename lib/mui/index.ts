@@ -12,6 +12,9 @@ export const theme = createTheme({
     body1: { fontSize: "1rem" },
     body2: { fontSize: "0.875rem" },
     caption: { fontSize: "0.75rem" },
-    button: { fontSize: "0.875rem" },
+    button: { 
+      fontSize: "0.875rem", 
+      fontWeight: 600,
+    },
   }
 })
