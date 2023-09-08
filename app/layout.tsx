@@ -1,10 +1,12 @@
-import './styles/globals.css';
-import { AppBar, Box, Button, Toolbar } from '@mui/material';
+import { AppBar, Box, Toolbar } from '@mui/material';
 import { EventAvailable } from '@mui/icons-material';
+import { ToastContainer } from 'react-toastify';
 
 import { Providers } from '@/lib/providers';
 import { Nav } from './components/Nav';
 
+import './styles/globals.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function RootLayout(props: React.PropsWithChildren) {
   return (
@@ -40,6 +42,8 @@ export default function RootLayout(props: React.PropsWithChildren) {
             
             {props.children}
           </Box>
+
+          <ToastContainer />
         </body>
       </html>
     </Providers>
