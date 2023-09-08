@@ -6,7 +6,12 @@ import { useState } from "react";
 
 import { MenuItem } from './styles'
 
-export const TableMenu = () => {
+type TableMenuProps = {
+  onDelete: () => void;
+  onEdit: () => void;
+}
+
+export const TableMenu = ({onDelete, onEdit}: TableMenuProps) => {
   const [anchorElement, setAnchorElement] = useState<HTMLElement | null>(null);
   
   const handleClick = (event: React.MouseEvent<HTMLElement>) => { 
@@ -28,11 +33,11 @@ export const TableMenu = () => {
         anchorEl={anchorElement}
         onClose={handleClose}
         >
-        <MenuItem>
+        <MenuItem onClick={onDelete}>
           <Delete /> 
           Delete  
         </MenuItem>
-        <MenuItem>
+        <MenuItem onClick={onEdit}>
           <Edit />
           Edit
         </MenuItem>
