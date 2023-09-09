@@ -24,7 +24,11 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       return NextResponse.json<Room>(room);
     }
   
-    const rooms = await db.room.findMany();
+    const rooms = await db.room.findMany({
+      orderBy: {
+        'createdAt': 'desc'
+      }
+    });
   
     return NextResponse.json<Room[]>(rooms)  
   } catch (error) {
