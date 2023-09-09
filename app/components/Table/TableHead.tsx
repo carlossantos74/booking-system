@@ -13,7 +13,7 @@ export function TableHead ({ titles }: TableHeadProps) {
       <TableRow>
         {
           titles.map((title, index) => (
-            <TableCell key={index}>{ title }</TableCell>
+            <TableCell role='cell' key={index}>{ title }</TableCell>
           ))
         }
       </TableRow>
