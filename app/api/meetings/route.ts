@@ -15,7 +15,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         },
         include: {
           meetingUsers: true,
-        }
+        },
       });
   
       if(!meeting) {
@@ -27,6 +27,9 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   
 
       const users = await db.user.findMany({
+        orderBy: {
+          createdAt: 'desc'
+        },
         where: {
           id: { 
             in: meeting.meetingUsers.map((meetingUser) => meetingUser.userId)

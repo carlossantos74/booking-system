@@ -2,8 +2,8 @@ import type { User } from '@prisma/client'
 
 export interface MeetingCreationBody {
   name: string,
-  timeToStart: Date,
-  timeToEnd: Date,
+  timeToStart: string,
+  timeToEnd: string,
   users: string[],
 }
 

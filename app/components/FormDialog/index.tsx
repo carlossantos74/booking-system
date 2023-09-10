@@ -45,7 +45,7 @@ export function FormDialog ({
       </DialogContent>
       <DialogActions>
         <Button variant="contained" onClick={onClose}>Cancel</Button>
-        <Button variant="contained" onClick={onConfirm}>{buttonText}</Button>
+        <Button variant="contained" onClick={() => onConfirm()}>{buttonText}</Button>
       </DialogActions>
     </Dialog>
   )

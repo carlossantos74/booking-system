@@ -8,7 +8,7 @@ import { MenuItem } from './styles'
 
 type TableMenuProps = {
   onDelete: () => void;
-  onEdit: () => void;
+  onEdit?: () => void;
 }
 
 export const TableMenu = ({onDelete, onEdit}: TableMenuProps) => {
@@ -37,10 +37,14 @@ export const TableMenu = ({onDelete, onEdit}: TableMenuProps) => {
           <Delete /> 
           Delete  
         </MenuItem>
-        <MenuItem onClick={onEdit}>
-          <Edit />
-          Edit
-        </MenuItem>
+        {
+          onEdit && (
+            <MenuItem onClick={onEdit}>
+              <Edit />
+              Edit
+            </MenuItem>
+          )
+        }
       </Menu>
     </>
   )
