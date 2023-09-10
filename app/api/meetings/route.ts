@@ -38,7 +38,8 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         id: meeting.id,
         name: meeting.name,
         roomId: meeting.roomId,
-        time: meeting.time,
+        timeToStart: meeting.timeToStart,
+        timeToEnd: meeting.timeToEnd,
         users,
       });
     }
@@ -60,8 +61,9 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     return NextResponse.json<Meeting[]>(meetings.map(meeting => ({
       id: meeting.id,
       name: meeting.name,
-      time: meeting.time,
       roomId: meeting.roomId,
+      timeToStart: meeting.timeToStart,
+      timeToEnd: meeting.timeToEnd,
       users: users.filter((user) => meeting.meetingUsers.find((meetingUser) => meetingUser.userId === user.id)),
     })));
   } catch (error) {
@@ -82,9 +84,9 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const { name, time, users }: MeetingCreationBody = JSON.parse(body); 
+    const { name, timeToStart, timeToEnd, users }: MeetingCreationBody = JSON.parse(body); 
 
-    if(!name || !time || !users) {
+    if(!name || !timeToStart || !timeToEnd || !users) {
       return NextResponse.json({
         statusText: 'Bad Request - Missing fields'
       }, 
@@ -94,7 +96,8 @@ export async function POST(request: NextRequest) {
     const meeting = await db.meeting.create({
       data: {
         name,
-        time,
+        timeToStart,
+        timeToEnd,
         meetingUsers: {
           create: users.map((id) => ({ userId: id }))
         }
@@ -115,7 +118,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json<Meeting>({
       id: meeting.id,
       name: meeting.name,
-      time: meeting.time,
+      timeToStart: meeting.timeToStart,
+      timeToEnd: meeting.timeToEnd,
       roomId: meeting.roomId,
       users: usersInToMeeting,
     }, 
@@ -138,9 +142,9 @@ export async function PUT(request: NextRequest) {
   }
 
   try {
-    const { id, name, time, users }: MeetingUpdateBody = JSON.parse(body);
+    const { id, name, timeToStart, timeToEnd, users }: MeetingUpdateBody = JSON.parse(body);
 
-    if(!id || !name || !time || !users) {
+    if(!id || !name || !timeToStart || !timeToEnd || !users) {
       return NextResponse.json({
         statusText: 'Bad Request - Missing fields'
       }, 
@@ -170,7 +174,8 @@ export async function PUT(request: NextRequest) {
       where: { id },
       data: {
         name,
-        time,
+        timeToStart,
+        timeToEnd,
       },
       include: {
         meetingUsers: true,
@@ -188,7 +193,8 @@ export async function PUT(request: NextRequest) {
     return NextResponse.json<Meeting>({
       id: meeting.id,
       name: meeting.name,
-      time: meeting.time,
+      timeToStart: meeting.timeToStart,
+      timeToEnd: meeting.timeToEnd,
       roomId: meeting.roomId,
       users: usersInToMeeting,
     });

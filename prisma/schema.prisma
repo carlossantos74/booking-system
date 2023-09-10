@@ -30,7 +30,8 @@ model Room {
 model Meeting {
   id           String        @id @default(uuid())
   name         String
-  time         DateTime
+  timeToStart  DateTime
+  timeToEnd    DateTime
   room         Room?         @relation(fields: [roomId], references: [id])
   roomId       String?
   createdAt    DateTime      @default(now())
