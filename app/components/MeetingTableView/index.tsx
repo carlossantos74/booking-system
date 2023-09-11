@@ -31,10 +31,10 @@ export function MeetingTableView({ list, onClickDelete  }: MeetingTableViewProps
                   {meeting.name}
                 </TableCell>
                 <TableCell>
-                  {moment(meeting.timeToStart).format('YYYY-MM-DD HH:mm')} 
+                  {moment(meeting.timeToStart).format('YYYY-MM-DD hh:mm A')} 
                 </TableCell>
                 <TableCell>
-                  {moment(meeting.timeToEnd).format('YYYY-MM-DD HH:mm')}
+                  {moment(meeting.timeToEnd).format('YYYY-MM-DD hh:mm A')}
                 </TableCell>
                 <TableCell>
                   {meeting.room?.name || '-'}

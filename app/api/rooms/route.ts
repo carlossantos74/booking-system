@@ -26,7 +26,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   
     const rooms = await db.room.findMany({
       orderBy: {
-        'createdAt': 'desc'
+        'createdAt': 'asc'
       }
     });
   

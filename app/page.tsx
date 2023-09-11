@@ -7,7 +7,8 @@ import {
   useTheme,
   Button,
   ToggleButtonGroup,
-  ToggleButton
+  ToggleButton,
+  ButtonGroup
 } from "@mui/material";
 import { State } from "@/app/components/States";
 import { useEffect, useState } from "react";
@@ -15,7 +16,9 @@ import {
   fetchMeetingList, 
   deleteMeeting,
   useDispatch, 
-  useSelector, 
+  useSelector,
+  fetchRoomList, 
+  assignMeetingRooms
 } from "@/lib/redux";
 import { MeetingCreateForm } from "./components/FormMeeting";
 import { MeetingTableView } from "./components/MeetingTableView";
@@ -35,14 +38,23 @@ export default function Page() {
   const [viewType, setViewType] = useState<View>(View.MODULE)
 
   const meetingList = useSelector(state => state.meeting.meetingList);
+  const roomList = useSelector(state => state.room.roomList);
   const isLoading = useSelector(state => state.meeting.isLoading);
 
   useEffect(() => { 
     dispatch(fetchMeetingList());
+
+    if(!roomList.length) {
+      dispatch(fetchRoomList());
+    }
   }, []);
 
   const handleDeleteMeeting = (id: string) => {
     dispatch(deleteMeeting(id));
+  }
+
+  const handleAssingMeetingRooms = () => {
+    dispatch(assignMeetingRooms({ meetingList, roomList }))
   }
 
   return (
@@ -64,9 +76,15 @@ export default function Page() {
           Meetings
         </h4>
 
-        <Button variant="contained" onClick={() => setFormOpen(true)}>
-          Create meeting
-        </Button>
+        <ButtonGroup variant="contained">
+          <Button variant="contained" onClick={() => setFormOpen(true)}>
+            Create meeting
+          </Button>
+
+          <Button variant="contained" onClick={handleAssingMeetingRooms}>
+            Assign rooms
+          </Button>
+        </ButtonGroup>
       </Box>
       {
         !meetingList.length || isLoading ? (

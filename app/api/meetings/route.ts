@@ -27,9 +27,6 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   
 
       const users = await db.user.findMany({
-        orderBy: {
-          createdAt: 'desc'
-        },
         where: {
           id: { 
             in: meeting.meetingUsers.map((meetingUser) => meetingUser.userId)
@@ -59,6 +56,9 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     }
   
     const meetings = await db.meeting.findMany({
+      orderBy: {
+        timeToStart: 'asc'
+      },
       include: {
         meetingUsers: true,
       }

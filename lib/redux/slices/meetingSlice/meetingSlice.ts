@@ -1,7 +1,13 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 import { MeetingState } from "./types";
-import { fetchMeetingList, createMeeting, deleteMeeting, editMeeting } from "./thunks";
+import { 
+  fetchMeetingList, 
+  createMeeting, 
+  deleteMeeting, 
+  editMeeting, 
+  assignMeetingRooms 
+} from "./thunks";
 
 const initialState: MeetingState = {
   meetingList: [],
@@ -41,6 +47,10 @@ export const meetingSlice = createSlice({
       state.meetingList.push(action.payload);
     });
 
+    builder.addCase(createMeeting.rejected, (state) => {
+      state.isLoading = false;
+    })
+
     builder.addCase(deleteMeeting.pending, (state) => {
       state.isLoading = true;
     })
@@ -48,6 +58,10 @@ export const meetingSlice = createSlice({
     builder.addCase(deleteMeeting.fulfilled, (state, action) => {
       state.isLoading = false;
       state.meetingList = state.meetingList.filter(meeting => meeting.id !== action.payload);
+    })
+
+    builder.addCase(deleteMeeting.rejected, (state) => {
+      state.isLoading = false;
     })
 
     builder.addCase(editMeeting.pending, (state, action) => { 
@@ -63,6 +77,18 @@ export const meetingSlice = createSlice({
 
         return meeting;
       })
+    })
+
+    builder.addCase(editMeeting.rejected, (state) => {
+      state.isLoading = false;
+    })
+
+    builder.addCase(assignMeetingRooms.pending, (state) => {
+      state.isLoading = true;
+    })
+
+    builder.addCase(assignMeetingRooms.rejected, (state) => {
+      state.isLoading = false;
     })
   }
 })

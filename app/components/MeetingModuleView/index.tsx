@@ -20,7 +20,7 @@ export function MeetingModuleView({ list, onClickDelete  }: MeetingModuleViewPro
     }
 
     meetingPerDate[date].push(meeting);
-  })
+  });
 
   return (
     <Grid
@@ -36,7 +36,7 @@ export function MeetingModuleView({ list, onClickDelete  }: MeetingModuleViewPro
       {
         Object.keys(meetingPerDate).map((date, index) => (
           <GridItem overflow="scroll" item key={index}>
-            <Typography variant="h5" my={2} mx={1}> Meeting of the day:  { date }</Typography>
+            <Typography variant="h5" my={2} mx={1}> Meetings of the day:  { date }</Typography>
             <Box>
               {
                 meetingPerDate[date].map((meeting) => (
