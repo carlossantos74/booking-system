@@ -90,7 +90,7 @@ export default function Page() {
         !meetingList.length || isLoading ? (
           <State 
             state={isLoading ? 'loading' : 'empty'} 
-            emptyText="No users to display"
+            emptyText="No meetings to display"
           />
         ) : (
           <Box>
