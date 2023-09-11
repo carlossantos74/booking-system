@@ -14,8 +14,8 @@ export interface MeetingUpdateBody extends MeetingCreationBody {
 export interface Meeting {
   id: string, 
   name: string,
-  timeToStart: Date,
-  timeToEnd: Date,
+  timeToStart: string,
+  timeToEnd: string,
   roomId: string | null,
   users: User[],
 }

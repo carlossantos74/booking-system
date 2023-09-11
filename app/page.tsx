@@ -1,20 +1,14 @@
 'use client'
 
 import { 
-  TableContainer, 
   Paper, 
-  Table, 
-  TableRow, 
-  TableCell, 
-  TableBody,
   Container,
   Box,
   useTheme,
   Button,
-  Typography
+  ToggleButtonGroup,
+  ToggleButton
 } from "@mui/material";
-import moment from 'moment';
-import { TableMenu, TableHead } from "@/app/components/Table"
 import { State } from "@/app/components/States";
 import { useEffect, useState } from "react";
 import { 
@@ -22,15 +16,23 @@ import {
   deleteMeeting,
   useDispatch, 
   useSelector, 
-  fetchRoomList
 } from "@/lib/redux";
 import { MeetingCreateForm } from "./components/FormMeeting";
+import { MeetingTableView } from "./components/MeetingTableView";
+import { ViewList, ViewModule } from "@mui/icons-material";
+import { MeetingModuleView } from "./components/MeetingModuleView";
+
+enum View {
+  TABLE = 'table', 
+  MODULE = 'module',
+}
 
 export default function Page() {
   const dispatch = useDispatch();
   const theme = useTheme();
   
   const [formOpen, setFormOpen] = useState(false);
+  const [viewType, setViewType] = useState<View>(View.MODULE)
 
   const meetingList = useSelector(state => state.meeting.meetingList);
   const isLoading = useSelector(state => state.meeting.isLoading);
@@ -73,46 +75,40 @@ export default function Page() {
             emptyText="No users to display"
           />
         ) : (
-          <TableContainer component={Paper}>
-            <Table size="small">
-              <TableHead 
-                titles={['Name', 'Start', 'End', 'Room', 'Users', 'Actions']}
+          <Box>
+            <Box mb={2} display="flex" justifyContent="flex-end">
+              <ToggleButtonGroup>
+                <ToggleButton 
+                  value={View.TABLE} 
+                  selected={viewType === View.TABLE}
+                  onClick={() => setViewType(View.TABLE)}
+                >
+                  <ViewList />
+                </ToggleButton>
+                <ToggleButton 
+                  value={View.MODULE} 
+                  selected={viewType === View.MODULE}
+                  onClick={() => setViewType(View.MODULE)}
+                >
+                  <ViewModule />
+                </ToggleButton>
+              </ToggleButtonGroup>
+            </Box>
+
+            {viewType === View.TABLE && (
+              <MeetingTableView 
+                list={meetingList} 
+                onClickDelete={handleDeleteMeeting} 
               />
-              <TableBody>
-                {
-                  meetingList.map((meeting) => (
-                    <TableRow key={meeting.id}>
-                      <TableCell>
-                        {meeting.name}
-                      </TableCell>
-                      <TableCell>
-                        {moment(meeting.timeToStart).format('YYYY-MM-DD HH:mm')} 
-                      </TableCell>
-                      <TableCell>
-                        {moment(meeting.timeToEnd).format('YYYY-MM-DD HH:mm')}
-                      </TableCell>
-                      <TableCell>
-                        {meeting.roomId || '-'}
-                      </TableCell>
-                      <TableCell>
-                        {meeting.users.map((user, index) => (
-                            <Typography key={user.id}>
-                              {index + 1} - {user.name}
-                            </Typography>
-                          ))
-                        }
-                      </TableCell>
-                      <TableCell>
-                        <TableMenu 
-                          onDelete={() => handleDeleteMeeting(meeting.id)}
-                        />
-                      </TableCell>
-                    </TableRow>
-                  ))
-                }
-              </TableBody>
-            </Table>
-          </TableContainer>
+            )}
+
+            {viewType === View.MODULE && (
+              <MeetingModuleView 
+                list={meetingList}
+                onClickDelete={handleDeleteMeeting} 
+              />
+            )}
+          </Box>
         )
       }
     </Container>
