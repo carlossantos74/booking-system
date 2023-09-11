@@ -4,57 +4,7 @@ import { MeetingCreationBody, MeetingUpdateBody, Meeting} from "./types"
 
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
-  const url = new URL(request.url);
-  const id = url.searchParams.get('id');
-
   try {
-    if(id) { 
-      const meeting = await db.meeting.findUnique({
-        where: {
-          id,
-        },
-        include: {
-          meetingUsers: true,
-        },
-      });
-  
-      if(!meeting) {
-        return NextResponse.json({
-          statusText: 'Not Found'
-        }, 
-        { status: 404 });
-      }
-  
-
-      const users = await db.user.findMany({
-        where: {
-          id: { 
-            in: meeting.meetingUsers.map((meetingUser) => meetingUser.userId)
-          }
-        }
-      })
-
-      let room = null;
-
-      if(meeting.roomId) { 
-        room = await db.room.findUnique({
-          where: {
-            id: meeting.roomId,
-          }
-        })
-      }  
-
-      return NextResponse.json<Meeting>({
-        id: meeting.id,
-        name: meeting.name,
-        roomId: meeting.roomId,
-        room,
-        timeToStart: meeting.timeToStart,
-        timeToEnd: meeting.timeToEnd,
-        users,
-      });
-    }
-  
     const meetings = await db.meeting.findMany({
       orderBy: {
         timeToStart: 'asc'

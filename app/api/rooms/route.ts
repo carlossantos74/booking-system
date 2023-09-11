@@ -4,26 +4,8 @@ import { Room } from '@prisma/client';
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
   const url = new URL(request.url);
-  const id = url.searchParams.get('id');
-
+  
   try {
-    if(id) { 
-      const room = await db.room.findUnique({
-        where: {
-          id,
-        }
-      });
-  
-      if(!room) {
-        return NextResponse.json({
-          statusText: 'Not Found'
-        }, 
-        { status: 404 });
-      }
-  
-      return NextResponse.json<Room>(room);
-    }
-  
     const rooms = await db.room.findMany({
       orderBy: {
         'createdAt': 'asc'

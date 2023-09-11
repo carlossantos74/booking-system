@@ -3,27 +3,7 @@ import { db } from '@/lib/prisma';
 import { User } from '@prisma/client';
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
-  const url = new URL(request.url);
-  const id = url.searchParams.get('id');
-
   try {
-    if(id) { 
-      const user = await db.user.findUnique({
-        where: {
-          id,
-        }
-      });
-  
-      if(!user) {
-        return NextResponse.json({
-          statusText: 'Not Found'
-        }, 
-        { status: 404 });
-      }
-  
-      return NextResponse.json<User>(user);
-    }
-  
     const users = await db.user.findMany();
   
     return NextResponse.json<User[]>(users)  
