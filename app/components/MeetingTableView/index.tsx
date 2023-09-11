@@ -37,7 +37,7 @@ export function MeetingTableView({ list, onClickDelete  }: MeetingTableViewProps
                   {moment(meeting.timeToEnd).format('YYYY-MM-DD HH:mm')}
                 </TableCell>
                 <TableCell>
-                  {meeting.roomId || '-'}
+                  {meeting.room?.name || '-'}
                 </TableCell>
                 <TableCell>
                   {meeting.users.map((user, index) => (

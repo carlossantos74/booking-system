@@ -17,7 +17,7 @@ export function MeetingCard({ meeting, onDelete }: MeetingCardProps) {
       <Typography variant="h5" my={2}>{ meeting.name }</Typography>
       <Typography variant="body1">Start: {moment(meeting.timeToStart).format('YYYY-MM-DD HH:mm')} </Typography>
       <Typography variant="body1">End: {moment(meeting.timeToEnd).format('YYYY-MM-DD HH:mm')} </Typography>
-      <Typography variant="body1">Room: { meeting.roomId || '-' }</Typography>
+      <Typography variant="body1">Room: { meeting.room?.name || '-' }</Typography>
       <Typography 
         mt={2} 
         variant="h6" 
