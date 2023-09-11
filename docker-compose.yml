@@ -9,6 +9,8 @@ services:
       - "3000:3000"
     depends_on:
       - postgres
+    environment:
+      DATABASE_URL: postgres://booking:uyg@xvp5WGD8wvd7pea@postgres:5432/booking-db
   # PostgreSQL database
   postgres:
     image: postgres:latest
