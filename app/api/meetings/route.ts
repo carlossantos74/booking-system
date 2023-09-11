@@ -37,10 +37,21 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         }
       })
 
+      let room = null;
+
+      if(meeting.roomId) { 
+        room = await db.room.findUnique({
+          where: {
+            id: meeting.roomId,
+          }
+        })
+      }  
+
       return NextResponse.json<Meeting>({
         id: meeting.id,
         name: meeting.name,
         roomId: meeting.roomId,
+        room,
         timeToStart: meeting.timeToStart,
         timeToEnd: meeting.timeToEnd,
         users,
@@ -60,11 +71,14 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         }
       }
     });
+
+    const rooms = await db.room.findMany()
   
     return NextResponse.json<Meeting[]>(meetings.map(meeting => ({
       id: meeting.id,
       name: meeting.name,
       roomId: meeting.roomId,
+      room: rooms.find((room) => room.id === meeting.roomId) ?? null,
       timeToStart: meeting.timeToStart,
       timeToEnd: meeting.timeToEnd,
       users: users.filter((user) => meeting.meetingUsers.find((meetingUser) => meetingUser.userId === user.id)),
@@ -116,7 +130,7 @@ export async function POST(request: NextRequest) {
           in: meeting.meetingUsers.map((meetingUser) => meetingUser.userId)
         }
       }
-    })
+    });
 
     return NextResponse.json<Meeting>({
       id: meeting.id,
@@ -124,6 +138,7 @@ export async function POST(request: NextRequest) {
       timeToStart: meeting.timeToStart,
       timeToEnd: meeting.timeToEnd,
       roomId: meeting.roomId,
+      room: null,
       users: usersInToMeeting,
     }, 
     { 
@@ -193,12 +208,23 @@ export async function PUT(request: NextRequest) {
       }
     })
 
+    let room = null;
+
+    if(meeting.roomId) { 
+      room = await db.room.findUnique({
+        where: {
+          id: meeting.roomId,
+        }
+      })
+    }
+
     return NextResponse.json<Meeting>({
       id: meeting.id,
       name: meeting.name,
       timeToStart: meeting.timeToStart,
       timeToEnd: meeting.timeToEnd,
       roomId: meeting.roomId,
+      room,
       users: usersInToMeeting,
     });
   } catch (error) {
