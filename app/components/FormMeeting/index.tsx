@@ -42,12 +42,12 @@ const mergeDateAndTime = (date: Date, time: Date): string => {
   time = new Date(time);
 
   return new Date(
-    date.getDate(),
-    date.getMonth(),
     date.getFullYear(),
+    date.getMonth(),
+    date.getDate(),
     time.getHours(),
     time.getMinutes(),
-    time.getSeconds()
+    time.getSeconds(),
   ).toISOString()
 }
 
