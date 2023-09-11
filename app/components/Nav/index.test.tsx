@@ -6,7 +6,7 @@ describe('Nav', () => {
     render(<Nav />);
     const usersLink = screen.getByRole('link', { name: /users/i });
     const roomsLink = screen.getByRole('link', { name: /rooms/i });
-    const calendarLink = screen.getByRole('link', { name: /calendar/i });
+    const calendarLink = screen.getByRole('link', { name: /meetings/i });
 
     expect(usersLink).toHaveAttribute('href', '/users');
     expect(roomsLink).toHaveAttribute('href', '/rooms');

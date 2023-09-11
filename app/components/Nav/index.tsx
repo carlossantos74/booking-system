@@ -7,7 +7,7 @@ export function Nav() {
     <Box component="nav">
       <Link href='/users'><Person /> Users</Link>
       <Link href='/rooms'><Groups /> Rooms</Link>
-      <Link href='/'><CalendarMonth /> Calendar</Link>
+      <Link href='/'><CalendarMonth /> Meetings</Link>
     </Box>
   )
 }
